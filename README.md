@@ -1,6 +1,6 @@
 # algojour1-ENG
 Léna ENG
-Hugo L
+Hugo Lambert
 Channel TD 7
 
 ## Tri à bulles : 
