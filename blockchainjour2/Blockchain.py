@@ -1,11 +1,11 @@
 from hashlib import sha256
 from datetime import datetime
 import random
-import sys
 import time
 
 on = True
 blockchain = []
+nZeros = 0
 
 def calculateHash(block):
         """
@@ -17,6 +17,8 @@ def calculateHash(block):
 def create_blockchain(nbBlocks, nbZeros):
     i = 1
     resBC = []
+    global nZeros
+    nZeros = nbZeros
     if nbBlocks > 0:
         data = make_random()
         b = Block(0, None, data)
@@ -74,15 +76,16 @@ class Blockchain:
 
 def new_blockchain():
     global blockchain
-    nbBlocks = int(input("Create a new blockchain\n\nNumber of blocks (int) : "))
+    print("\nCreate a new blockchain :")
+    print("(random data) \n\n")
+    nbBlocks = int(input("Number of blocks (int) : "))
     nbZeros = int(input("\nEnter number x of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
     if nbZeros > 5 or nbZeros < 0  :
         while nbZeros > 5 or nbZeros < 0  :
             nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
     bc = Blockchain(nbBlocks, nbZeros)
     blockchain = bc.arrayBlocks
-    print(blockchain)
-    print("Blockchain created !")
+    print("\n--- Blockchain created ! ---")
     time.sleep(1)
 
 
@@ -91,7 +94,7 @@ def view_blockchain():
     i = 0
     length = len(blockchain)
     print(blockchain)
-    print("\nView blockchain : ")
+    print("\nView blockchain : \n\n")
     while i < length:
         print("\nBlock #", blockchain[i].index)
         time.sleep(0.05)
@@ -107,6 +110,44 @@ def view_blockchain():
         time.sleep(0.05)
         print("]")
         i+=1
+
+def add_block():
+    global blockchain
+    global nZeros
+    length = len(blockchain) - 1
+    print("Add a block :\n\n")
+    response = input("Do you need random data ? (Y/N) : ")
+    print(response)
+    if response == "Y" or response == "y":
+        print("Oui")
+        data = make_random()
+        b = Block(blockchain[length].index+1, blockchain[length].currentHash, data)
+        b.make_hashcode(nZeros)
+        blockchain.append(b)
+    elif response == "N" or response == "n":
+        print("Non")
+        is_data = False
+        while is_data == False:
+            data = input("Enter your data : ")
+            print("Is this your data ? (Y/N) : ", data)
+            res_data = input()
+            if res_data == "Y" or res_data == "y": # Si la data convient
+                b = Block(blockchain[length].index+1, blockchain[length].currentHash, data)
+                b.make_hashcode(nZeros)
+                blockchain.append(b)
+                is_data = True
+            elif res_data == "N" or res_data == "n": # Si la data ne convient pas
+                out = input("Do you want random data ? (Y/N) : ")
+                if out == "Y" or out == "y": # Possibilité de changer d'avis et d'ajouter une data aléatoire
+                    data = make_random()
+                    b = Block(blockchain[length].index+1, blockchain[length].currentHash, data)
+                    b.make_hashcode(nZeros)
+                    blockchain.append(b)
+                    is_data = True
+                else: is_data = False
+            else: is_data = False
+    print("\n--- Block created ---")
+    time.sleep(1)
 
 def start():
     global on
@@ -132,7 +173,11 @@ def start():
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(0.7)
         elif response == 'a':
-            print("En construction")
+            if len(blockchain) > 0:
+                add_block()
+            else:
+                print("\n\n--- First create a blockchain. ---\n")
+                time.sleep(0.7)
         else: 
             print("\n\n--- Wrong entry. ---\n")
             time.sleep(0.7)
