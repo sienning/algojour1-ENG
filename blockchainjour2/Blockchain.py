@@ -2,6 +2,7 @@ from hashlib import sha256
 from datetime import datetime
 import random
 import sys
+import time
 
 on = True
 blockchain = []
@@ -74,22 +75,50 @@ class Blockchain:
 def new_blockchain():
     global blockchain
     nbBlocks = int(input("Create a new blockchain\n\nNumber of blocks (int) : "))
-    nbZeros = int(input("\nEnter number of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
+    nbZeros = int(input("\nEnter number x of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
     if nbZeros > 5 or nbZeros < 0  :
         while nbZeros > 5 or nbZeros < 0  :
             nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
-    blockchain = Blockchain(nbBlocks, nbZeros)
+    bc = Blockchain(nbBlocks, nbZeros)
+    blockchain = bc.arrayBlocks
+    print(blockchain)
+    print("Blockchain created !")
+    time.sleep(1)
+
+
+def view_blockchain():
+    global blockchain
+    i = 0
+    length = len(blockchain)
+    print(blockchain)
+    print("\nView blockchain : ")
+    while i < length:
+        print("\nBlock #", blockchain[i].index)
+        time.sleep(0.05)
+        print("[ \n     Previous Hashcode : ", blockchain[i].previousHash)
+        time.sleep(0.05)
+        print("     Timestamp : ", blockchain[i].timestamp)
+        time.sleep(0.05)
+        print("     Nonce : ", blockchain[i].nonce)
+        time.sleep(0.05)
+        print("     Data : ", blockchain[i].data)
+        time.sleep(0.05)
+        print("     Current Hashcode : ", blockchain[i].currentHash)
+        time.sleep(0.05)
+        print("]")
+        i+=1
 
 def start():
     global on
+    global blockchain
     while on :
-        print("Menu Blockchain :\n")
+        print("\n*** Menu Blockchain ***\n")
         print("* New blockchain : b")
         print("* View blockchain : v")
         print("* Add block to a blockchain : a")
         print("* Quit : q")
 
-        response = input("\Choice : ")
+        response = input("\nChoice : ")
         
         if response == 'q':
             print("Bye")
@@ -97,10 +126,16 @@ def start():
         elif response == 'b':
             new_blockchain()
         elif response == 'v':
-            print("En construction")
+            if len(blockchain) > 0:
+                view_blockchain()
+            else:
+                print("\n\n--- First create a blockchain. ---\n")
+                time.sleep(0.7)
         elif response == 'a':
             print("En construction")
         else: 
-            print("Wrong entry")
+            print("\n\n--- Wrong entry. ---\n")
+            time.sleep(0.7)
+
         
 start()
