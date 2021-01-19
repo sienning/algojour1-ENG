@@ -77,6 +77,8 @@ class Blockchain:
 
 def new_blockchain():
     global blockchain
+    os.system('clear')
+
     print("\nCreate a new blockchain :")
     print("(random data) \n\n")
     nbBlocks = int(input("Number of blocks (int) : "))
@@ -96,8 +98,10 @@ def view_blockchain():
     quit = False
     length = len(blockchain)
     res = ""
+    os.system('clear')
+
     while quit == False:
-        print("\nView blockchain : \n\n")
+        print("\nView blockchain : \n")
         
         while i < length:
             print("\nBlock #", blockchain[i].index)
@@ -123,17 +127,16 @@ def add_block():
     global blockchain
     global nZeros
     length = len(blockchain) - 1
+    os.system('clear')
+
     print("Add a block :\n\n")
     response = input("Do you need random data ? (Y/N) : ")
-    print(response)
     if response == "Y" or response == "y":
-        print("Oui")
         data = make_random()
         b = Block(blockchain[length].index+1, blockchain[length].currentHash, data)
         b.make_hashcode(nZeros)
         blockchain.append(b)
     elif response == "N" or response == "n":
-        print("Non")
         is_data = False
         while is_data == False:
             data = input("Enter your data : ")
