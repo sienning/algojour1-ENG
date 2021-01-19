@@ -1,6 +1,10 @@
 from hashlib import sha256
 from datetime import datetime
 import random
+import sys
+
+on = True
+blockchain = []
 
 def calculateHash(block):
         """
@@ -19,13 +23,13 @@ def create_blockchain(nbBlocks, nbZeros):
         resBC.append(b)
         while i < nbBlocks:
             data = make_random()
-            b = Block(i, resBC[i-1], data)
+            b = Block(i, resBC[i-1].currentHash, data)
             b.make_hashcode(nbZeros)
             resBC.append(b)
             i+=1
         return resBC
 
-def make_random():
+def make_random(): # Crée une chaîne de 10 caractères aléatoires
     random_string = ''
     for _ in range(10):
         # Considering only upper and lowercase letters
@@ -43,7 +47,7 @@ class Block:
         self.previousHash = previousHash  # Hashcode du bloc précédent
         self.data = data  # Données ou transaction
         self.nonce = 0  # Preuve de travail : s'incrémente à chaque tentative
-        self.timestamp = datetime  # Date de sa création
+        self.timestamp = datetime.now()  # Date de sa création
         self.currentHash = calculateHash(self)  # Hashcode courant
 
     def make_hashcode(self, nbZeros):
@@ -67,8 +71,36 @@ class Blockchain:
     def __init__(self, nBlocks, nbZeros):
         self.arrayBlocks = create_blockchain(nBlocks, nbZeros)
 
+def new_blockchain():
+    global blockchain
+    nbBlocks = int(input("Create a new blockchain\n\nNumber of blocks (int) : "))
+    nbZeros = int(input("\nEnter number of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
+    if nbZeros > 5 or nbZeros < 0  :
+        while nbZeros > 5 or nbZeros < 0  :
+            nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
+    blockchain = Blockchain(nbBlocks, nbZeros)
 
-bc = Blockchain(3, 2)
+def start():
+    global on
+    while on :
+        print("Menu Blockchain :\n")
+        print("* New blockchain : b")
+        print("* View blockchain : v")
+        print("* Add block to a blockchain : a")
+        print("* Quit : q")
 
-print(bc.arrayBlocks)
-print(bc.arrayBlocks[1].data)
+        response = input("\Choice : ")
+        
+        if response == 'q':
+            print("Bye")
+            on = False
+        elif response == 'b':
+            new_blockchain()
+        elif response == 'v':
+            print("En construction")
+        elif response == 'a':
+            print("En construction")
+        else: 
+            print("Wrong entry")
+        
+start()
