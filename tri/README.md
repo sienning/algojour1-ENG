@@ -34,7 +34,7 @@ On fusionne les deux moitiés obtenues pour reconstituer la liste triée.
 La méthode consiste à placer un élément du tableau (appelé pivot) à sa place définitive, en permutant tous les éléments de telle sorte que tous ceux qui sont inférieurs au pivot soient à sa gauche et que tous ceux qui sont supérieurs au pivot soient à sa droite.
 Cette opération s'appelle le partitionnement. Pour chacun des sous-tableaux, on définit un nouveau pivot et on répète l'opération de partitionnement. Ce processus est répété récursivement, jusqu'à ce que l'ensemble des éléments soit trié.
 Concrètement, pour partitionner un sous-tableau :
-•	le pivot est placé à la fin (arbitrairement), en l'échangeant avec le dernier élément du sous-tableau ;
-•	tous les éléments inférieurs au pivot sont placés en début du sous-tableau ;
-•	le pivot est déplacé à la fin des éléments déplacés.
+* le pivot est placé à la fin (arbitrairement), en l'échangeant avec le dernier élément du sous-tableau ;
+* tous les éléments inférieurs au pivot sont placés en début du sous-tableau ;
+* le pivot est déplacé à la fin des éléments déplacés.
 
