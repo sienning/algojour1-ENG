@@ -33,7 +33,6 @@ def insertion(liste):
     if length <= 1: return tmp
     else:
         while t < length:
-            
             nbIteration+=1
             i = len(res)-1 # longueur de res -1
             x = res[len(res)-1] # Dernier élément de res

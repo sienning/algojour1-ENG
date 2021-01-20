@@ -130,9 +130,11 @@ def view_blockchain():
     while quit == False:
         print("\nView blockchain : \n")
         while i < length:
-            print("\nBlock #", blockchain[i].index)
+            print("\nBlock #", blockchain[i].index +1 )
             time.sleep(0.05)
-            print("[ \n     Previous Hashcode : ", blockchain[i].previousHash)
+            print("[ \n     Index : ", blockchain[i].index)
+            time.sleep(0.05)
+            print("     Previous Hashcode : ", blockchain[i].previousHash)
             time.sleep(0.05)
             print("     Timestamp : ", blockchain[i].timestamp)
             time.sleep(0.05)
@@ -149,9 +151,11 @@ def view_blockchain():
             quit = True
 
 def view_one_block(block):
-    print("\nBlock #", block.index)
+    print("\nBlock #", block.index+1)
     time.sleep(0.05)
-    print("[ \n     Previous Hashcode : ", block.previousHash)
+    print("[ \n     Index : ", block.index)
+    time.sleep(0.05)
+    print("     Previous Hashcode : ", block.previousHash)
     time.sleep(0.05)
     print("     Timestamp : ", block.timestamp)
     time.sleep(0.05)
@@ -258,7 +262,7 @@ def retrieve_blockchain():
                 timestamp = line[12:]
             if line[:14] == "currentHash : ":
                 currentHash = str(line[14:])
-                add_retrieve(index, previousHash, data, nonce, timestamp, currentHash)
+                add_retrieve(index, previousHash.strip('\n'), data.strip('\n'), nonce, timestamp, currentHash.strip('\n'))
         else:
             current_block = index_block
     file_bc.close
@@ -314,9 +318,6 @@ def remove_block():
     global blockchain
     length = len(blockchain)
     remove = False
-    # os.system('clear')
-    # print("Remove one block : \n\n")
-    # print("You have %d blocks in your blockchain." % length)
     while remove == False:
         os.system('clear')
         print("Remove one block : \n\n")
@@ -346,7 +347,6 @@ def start():
     v : Voir la blockchain créée
     a : Ajouter un bloc à la blockchain
     b : Vérifier un bloc spécifique
-    m : Modifier un bloc spécifique
     r : Retirer un bloc de la blockchain
     s : Sauvegarde la blockchain créée
     d : Supprime la blockchain et sa sauvegarde
@@ -371,7 +371,7 @@ def start():
         print("* View your blockchain : v")
         print("* Add block to your blockchain : a")
         print("* Check one block from your blockchain : b")
-        print("* Remove one block from your blockchain : r")
+        # print("* Remove one block from your blockchain : r")
         print("* Save your blockchain : s")
         print("* Delete your blockchain : d")
         print("\n* Quit : q")
@@ -402,7 +402,10 @@ def start():
                 time.sleep(1)
 
         elif response == 'r': # Remove one block from your blockchain
-            if len(blockchain) > 0: remove_block()
+            # if len(blockchain) > 0: remove_block()
+            if len(blockchain) > 0: 
+                print("\n\n--- En construction ---\n")
+                time.sleep(1)
             else:
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(1)
