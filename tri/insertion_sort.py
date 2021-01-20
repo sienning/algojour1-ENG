@@ -28,12 +28,12 @@ def insertion(liste):
     length = len(tmp)
     res = [tmp[0]]
     t = 1
-    if length <= 1:
-        return tmp
+    global nbIteration
+    global nbComp
+    if length <= 1: return tmp
     else:
         while t < length:
-            global nbIteration
-            global nbComp
+            
             nbIteration+=1
             i = len(res)-1 # longueur de res -1
             x = res[len(res)-1] # Dernier élément de res

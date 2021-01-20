@@ -97,13 +97,7 @@ def new_blockchain():
             f= open("saved_blockchain.txt","w+")
             f.write('')
             f.close()
-            nbBlocks = int(input("Number of blocks (int) : "))
-            nbZeros = int(input("\nEnter number x of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
-            if nbZeros > 5 or nbZeros < 0  :
-                while nbZeros > 5 or nbZeros < 0  :
-                    nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
-            bc = Blockchain(nbBlocks, nbZeros)
-            blockchain = bc.arrayBlocks
+            blockchain = generate_blockchain()
             print("\n--- Blockchain created ! ---")
             time.sleep(1)
         elif response == 'N' or response == 'n':
@@ -112,16 +106,18 @@ def new_blockchain():
         else : 
             response = input("Continue ? (Y/N) : ")
     else:
-        nbBlocks = int(input("Number of blocks (int) : "))
-        nbZeros = int(input("\nEnter number x of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
-        if nbZeros > 5 or nbZeros < 0  :
-            while nbZeros > 5 or nbZeros < 0  :
-                nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
-        bc = Blockchain(nbBlocks, nbZeros)
-        blockchain = bc.arrayBlocks
+        blockchain = generate_blockchain()
         print("\n--- Blockchain created ! ---")
         time.sleep(1)
 
+def generate_blockchain():
+    nbBlocks = int(input("Number of blocks (int) : "))
+    nbZeros = int(input("\nEnter number x of 0 in hashcode (int), 0 < x < 5 (excluded) : "))
+    if nbZeros > 5 or nbZeros < 0  :
+        while nbZeros > 5 or nbZeros < 0  :
+            nbZeros = int(input("Warning ! Enter an integer between 0 and 5 (excluded) : "))
+    bc = Blockchain(nbBlocks, nbZeros)
+    return bc.arrayBlocks
 
 def view_blockchain():
     global blockchain
@@ -133,7 +129,6 @@ def view_blockchain():
 
     while quit == False:
         print("\nView blockchain : \n")
-        print(blockchain)
         while i < length:
             print("\nBlock #", blockchain[i].index)
             time.sleep(0.05)
@@ -153,6 +148,20 @@ def view_blockchain():
         if res == 'q' or res == 'Q':
             quit = True
 
+def view_one_block(block):
+    print("\nBlock #", block.index)
+    time.sleep(0.05)
+    print("[ \n     Previous Hashcode : ", block.previousHash)
+    time.sleep(0.05)
+    print("     Timestamp : ", block.timestamp)
+    time.sleep(0.05)
+    print("     Nonce : ", block.nonce)
+    time.sleep(0.05)
+    print("     Data : ", block.data)
+    time.sleep(0.05)
+    print("     Current Hashcode : ", block.currentHash)
+    time.sleep(0.05)
+    print("]")
 
 def add_block():
     global blockchain
@@ -218,7 +227,6 @@ def add_retrieve(index, previousHash, data, nonce, timestamp, currentHash):
     b = OldBlock(index, previousHash, data, nonce, new_timestamp, currentHash)
     blockchain.append(b)
     
-
 def retrieve_blockchain():
     file_bc  = open("saved_blockchain.txt", 'r')
     global nZeros
@@ -278,66 +286,140 @@ def save_blockchain():
     print("\n--- Blockchain saved ---")
     time.sleep(1)
 
+def check_block():
+    global blockchain
+    length = len(blockchain)
+    check = False
+    quit = False
+
+    os.system('clear')
+    print("Check one block : \n\n")
+    print("You have %d blocks in your blockchain." % length)
+    response = int(input("Which one do you want to check ? : "))
+
+    while check == False:
+        if response <= 0 or response > length:
+            response = int(input("--- Wrong Entry ---\n\nWhich one do you want to check ? : "))
+        else:
+            while quit == False:
+                os.system('clear')
+                print("This is your block", response)
+                view_one_block(blockchain[response-1])
+                res = input("Exit (q) : ")
+                if res == 'q' or res == 'Q':
+                    quit = True
+            check = True
+
+def remove_block():
+    global blockchain
+    length = len(blockchain)
+    remove = False
+    # os.system('clear')
+    # print("Remove one block : \n\n")
+    # print("You have %d blocks in your blockchain." % length)
+    while remove == False:
+        os.system('clear')
+        print("Remove one block : \n\n")
+        print("You have %d blocks in your blockchain." % length)
+        response = int(input("Which one do you want to remove ? : "))
+        if response <= 0 or response > length:
+            response = int(input("--- Wrong Entry ---\n\nWhich one do you want to remove ? : "))
+        else:
+            os.system('clear')
+            print("Do you want to remove this block %d ?" % response)
+            view_one_block(blockchain[response-1])
+            res = input("Yes (Y) / No (N) : ")
+            if res == 'Y' or res == 'y':
+                print("supprimer bloc")
+                time.sleep(1)
+                remove = True
+            elif res == 'N' or res == 'n':
+                print("Changer de bloc")
+                remove = False
+
 def start():
+    """
+    Fonction Start
+    Démarre le programme et ne s'arrête pas tant que l'entrée est 'q'
+    Affiche le menu
+    c : Créer une nouvelle blockchain
+    v : Voir la blockchain créée
+    a : Ajouter un bloc à la blockchain
+    b : Vérifier un bloc spécifique
+    m : Modifier un bloc spécifique
+    r : Retirer un bloc de la blockchain
+    s : Sauvegarde la blockchain créée
+    d : Supprime la blockchain et sa sauvegarde
+    """
     global on
     global blockchain
     
-    file_bc  = open("saved_blockchain.txt", 'r')
+    file_bc = open("saved_blockchain.txt", 'r')
     file_length = len(file_bc.read())
     file_bc.close
     if file_length > 0:
-        retrieve_blockchain()
+        retrieve_blockchain() # Si sauvegarde existante : on réattribue les données
 
     while on :
-        file_bc  = open("saved_blockchain.txt", 'r')
+        file_bc = open("saved_blockchain.txt", 'r')
         file_length = len(file_bc.read())
         file_bc.close
 
         os.system('clear')
         print("\n*** Menu Blockchain ***\n")
-        print("* New blockchain : b")
+        print("* Create new blockchain : c")
         print("* View your blockchain : v")
         print("* Add block to your blockchain : a")
+        print("* Check one block from your blockchain : b")
+        print("* Remove one block from your blockchain : r")
         print("* Save your blockchain : s")
         print("* Delete your blockchain : d")
-        print("* Quit : q")
-        if file_length > 0:
-            print("(You have already saved a blockchain)")
-
+        print("\n* Quit : q")
+        if file_length > 0: print("(You have already saved a blockchain)")
         response = input("\nChoice : ")
-        
+
         if response == 'q':
             print("Bye")
             on = False
-        elif response == 'b':
-            new_blockchain()
-        elif response == 'v':
-            if len(blockchain) > 0:
-                view_blockchain()
+        elif response == 'c': new_blockchain() # Create new blockchain 
+
+        elif response == 'v': # View your blockchain
+            if len(blockchain) > 0: view_blockchain()
             else:
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(1)
-        elif response == 'a':
-            if len(blockchain) > 0:
-                add_block()
+
+        elif response == 'a': # Add block to your blockchain
+            if len(blockchain) > 0: add_block()
             else:
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(1)
-        elif response == 's':
-            if len(blockchain) > 0:
-                save_blockchain()
+
+        elif response == 'b': # Check one block from your blockchain
+            if len(blockchain) > 0: check_block()
             else:
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(1)
-        elif response == 'd':
-            if len(blockchain) > 0:
-                delete_blockchain()
+
+        elif response == 'r': # Remove one block from your blockchain
+            if len(blockchain) > 0: remove_block()
             else:
                 print("\n\n--- First create a blockchain. ---\n")
                 time.sleep(1)
-        else: 
+
+        elif response == 's': # Save your blockchain
+            if len(blockchain) > 0: save_blockchain()
+            else:
+                print("\n\n--- First create a blockchain. ---\n")
+                time.sleep(1)
+
+        elif response == 'd': # Delete your blockchain
+            if len(blockchain) > 0: delete_blockchain()
+            else:
+                print("\n\n--- First create a blockchain. ---\n")
+                time.sleep(1)
+        else: # Wrong entry
             print("\n\n--- Wrong entry. ---\n")
             time.sleep(1)
 
-        
 start()

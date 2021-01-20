@@ -1,49 +1,22 @@
-nZeros : 2
+nZeros : 4
 
 index : 0
 previousHash : None
-
-data : IquvNAFTzw
-
-nonce : 355
-timestamp : 2021-01-20 14:10:06.998644
-currentHash : 001f67803292516ed5a36fff0b47733eabc98922156123aea12286e3bcea8bf7
-
+data : XihKHXyVHz
+nonce : 30673
+timestamp : 2021-01-20 15:57:09.146520
+currentHash : 0000cc76baa6c98cfecc68e5156011dd0e856254460e8f0d1e115d41535adc61
 
 index : 1
-previousHash : 001f67803292516ed5a36fff0b47733eabc98922156123aea12286e3bcea8bf7
-
-data : uPLdamLBAu
-
-nonce : 853
-timestamp : 2021-01-20 14:10:07.001278
-currentHash : 002df084f5981c9bb93a0c19895301fadf28fae01622007d7c0185ec57c8e31d
-
+previousHash : 0000cc76baa6c98cfecc68e5156011dd0e856254460e8f0d1e115d41535adc61
+data : UcGfJJyXhF
+nonce : 38094
+timestamp : 2021-01-20 15:57:09.255982
+currentHash : 00009954cfa53c3aea81f96b0ab4e1a3ae6945500ba19cbf5686f2d0ec598237
 
 index : 2
-previousHash : 002df084f5981c9bb93a0c19895301fadf28fae01622007d7c0185ec57c8e31d
-
-data : tDFQUCdLSQ
-
-nonce : 435
-timestamp : 2021-01-20 14:10:07.005626
-currentHash : 00eee8f0887d428c3d0d859212c3bc7615c783243ee56e1c09f0e4a9ed94cdae
-
-
-index : 3
-previousHash : 00eee8f0887d428c3d0d859212c3bc7615c783243ee56e1c09f0e4a9ed94cdae
-
-data : LGhrbuAzlb
-
-nonce : 238
-timestamp : 2021-01-20 14:10:41.561469
-currentHash : 0065d184fb28222a6aafe5f79e93f13f104161ba3afe21718a4864cb10f23705
-
-
-index : 4
-previousHash : 0065d184fb28222a6aafe5f79e93f13f104161ba3afe21718a4864cb10f23705
-
-data : iBirxOaQzt
-nonce : 66
-timestamp : 2021-01-20 14:11:15.021832
-currentHash : 00b4cd9667a067d211dced485f251167c16b4cd091e1146a0d06f1503a2c6815
+previousHash : 00009954cfa53c3aea81f96b0ab4e1a3ae6945500ba19cbf5686f2d0ec598237
+data : RHzCpaNKEI
+nonce : 26159
+timestamp : 2021-01-20 15:57:09.390218
+currentHash : 000054ae22b4d62d4dec9553b196eb568970e2ff21063d6f27efd7be6ffd3e70
