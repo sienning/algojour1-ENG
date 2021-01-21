@@ -28,7 +28,7 @@ def merge(listeA, listeB):
     i, j = 0,0
     global nbIteration
     global nbComp
-    while i < len(listeA) and j < len(listeB):
+    while i < len(listeA) and j < len(listeB): # On itère les deux listes
         nbIteration+=1
         if listeA[i] < listeB[j]:
             nbComp+=1
@@ -40,7 +40,7 @@ def merge(listeA, listeB):
     if i == len(listeA): # Si tous les éléments de A sont dans res, il doit rester des éléments dans B
         nbComp+=1
         res.extend(listeB[j:]) # On les ajoute à res
-    else : 
+    else :
         res.extend(listeA[i:])
     return res
 

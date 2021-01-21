@@ -381,6 +381,7 @@ def start():
         if response == 'q':
             print("Bye")
             on = False
+            
         elif response == 'c': new_blockchain() # Create new blockchain 
 
         elif response == 'v': # View your blockchain
